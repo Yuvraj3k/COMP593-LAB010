@@ -12,7 +12,7 @@ def main():
     # Test out the get_pokemon_into() function
     # Use breakpoints to view returned dictionary
     poke_info = get_pokemon_info("Rockruff")
-    download_pokemon_artwork= ('dugtrio', r'C:\temp')
+    download_pokemon_artwork('dugtrio', r'C:\temp')
     return
 
 def get_pokemon_info(pokemon):
@@ -59,13 +59,35 @@ def get_pokemon_name(Limit=10000, offset=0):
     resp_msg=requests.get(POKE_API_URL, params=params)
     if resp_msg.status_code == requests.codes.ok:
         print('Success')
-        resp_dict = resp_msg.jsob()
+        resp_dict = resp_msg.json()
         return[p['name'] for p in resp_dict['results']]
     else:
         print('Failure')
         print(f'Response code: {resp_msg.status_code} ({resp_msg.reason})')
 
     # TODO: Define function that downloads and saves Pokemon artwork
+def download_pokemon_artwork(pokemon_name, folder_path ='.'):
+    poke_info = get_pokemon_info(pokemon_name)
+    if poke_info is None:
+        return
+    
+    artwork_url = poke_info['sprites']['other']['official_artwork']['fromt_default']
+    if artwork_url is None:
+        print(f'No artwork available for {pokemon_name.capitalize()}.')
+        return
+    
+    #determine the image file path
+    file_ext=artwork_url.split('.'[-1])
+    image_path = os.path.join(folder_path, f'{pokemon_name}.{file_ext}')
+    
+
+    print(f'Downloading artwork for {pokemon_name.capitalize()}...',end='')
+    image_data = image_lib.download_image(artwork_url)
+    if image_data is None:
+        return
+    
+    if image_lib.save_image_file(image_data, image_path):
+        return image_path
 
 if __name__ == '__main__':
     main()
