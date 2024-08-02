@@ -38,9 +38,10 @@ root.iconbitmap(os.path.join(script_dir, 'poke_ball.ico'))
 frm = ttk.Frame(root)
 frm.columnconfigure(0, weight=1)
 frm.rowconfigure(0, weight=1)
-frm.grid(sticky="nsew")
+frm.grid(sticky= NSEW)
 
 
 # TODO: Populate frames with widgets and define event handler functions
-
+image_path = os.path.join(script_dir, 'poke_ball.png')
+photo = PhotoImage(file=image_path)
 root.mainloop()
