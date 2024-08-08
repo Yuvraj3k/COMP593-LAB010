@@ -67,7 +67,7 @@ def select_pokemon(event):
         
     else:
         label["image"] = None
-        label["text"] = "Error: No artwork found for " + poke_cbox.get  
+        label["text"] = "Error: No artwork found for " + poke_cbox.get() 
         btn_set_wallpaper['state'] = 'disabled'
 
 def set_wallpaper():
