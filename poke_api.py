@@ -77,15 +77,16 @@ def download_pokemon_artwork(pokemon_name, folder_path ='.'):
         return
     
     #determine the image file path
-    file_ext=artwork_url.split('.'[-1])
+    
+    image_data = image_lib.download_image(artwork_url)
+    if image_data is None:
+        return 
+    
+    file_ext = artwork_url.split('.')[-1] 
     image_path = os.path.join(folder_path, f'{pokemon_name}.{file_ext}')
     
 
     print(f'Downloading artwork for {pokemon_name.capitalize()}...',end='')
-    image_data = image_lib.download_image(artwork_url)
-    if image_data is None:
-        return
-    
     if image_lib.save_image_file(image_data, image_path):
         return image_path
 
