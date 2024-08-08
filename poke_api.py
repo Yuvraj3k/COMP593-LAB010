@@ -70,8 +70,8 @@ def download_pokemon_artwork(pokemon_name, folder_path ='.'):
     poke_info = get_pokemon_info(pokemon_name)
     if poke_info is None:
         return
-    
-    artwork_url = poke_info['sprites']['other']['official_artwork']['fromt_default']
+    artwork_url = poke_info["sprites"]["other"]["official-artwork"]["front_default"]
+
     if artwork_url is None:
         print(f'No artwork available for {pokemon_name.capitalize()}.')
         return
